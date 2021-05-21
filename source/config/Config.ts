@@ -10,8 +10,11 @@ const SERVER = {
     port: SERVER_PORT
 };
 
+const ENV = process.env.NODE_ENV || 'development';
+
 const config = {
-    server: SERVER
+    server: SERVER,
+    env: ENV
 };
 
 export default config;

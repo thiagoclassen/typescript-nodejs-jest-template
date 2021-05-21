@@ -2,6 +2,8 @@ import http from 'http';
 import express from 'express';
 import logging from './config/Logging';
 import config from './config/Config';
+import SwaggerUi from 'swagger-ui-express';
+import { SwaggerDocument } from './config/SwaggerDocument';
 import { HealthCheck } from './routes/HealthCheck';
 
 const NAMESPACE = 'Server';
@@ -23,6 +25,11 @@ app.use((req, res, next) => {
 /** Parse the body of the request */
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+/** Swagger Setup */
+if (config.env !== 'production') {
+    app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(SwaggerDocument));
+}
 
 /** CORS */
 app.use((req, res, next) => {
