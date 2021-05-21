@@ -15,8 +15,7 @@
     "@elastic/ecs-pino-format": "^1.1.2",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",    
-    "pino": "^6.11.3",
-    "pino-tee": "^0.3.0"
+    "pino": "^6.11.3"    
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
