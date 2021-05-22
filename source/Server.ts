@@ -12,12 +12,10 @@ const app = express();
 /** Log the request */
 app.use((req, res, next) => {
     /** Log the req */
-    //logging.info(NAMESPACE, `[Request] METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
     logger.info(`[${NAMESPACE}] [Request] METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
 
     res.on('finish', () => {
         /** Log the res */
-        //logging.info(NAMESPACE, `[Response] METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`);
         logger.info(`[${NAMESPACE}] [Response] METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`);
     });
 
