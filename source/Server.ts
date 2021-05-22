@@ -1,8 +1,8 @@
 import http from 'http';
 import express from 'express';
-import logging from './config/Logging';
 import config from './config/Config';
 import SwaggerUi from 'swagger-ui-express';
+import { logger } from './config/Logger';
 import { SwaggerDocument } from './config/SwaggerDocument';
 import { HealthCheck } from './routes/HealthCheck';
 
@@ -12,15 +12,19 @@ const app = express();
 /** Log the request */
 app.use((req, res, next) => {
     /** Log the req */
-    logging.info(NAMESPACE, `[Request] METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
+    //logging.info(NAMESPACE, `[Request] METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
+    logger.info(`[${NAMESPACE}] [Request] METHOD: [${req.method}] - URL: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
 
     res.on('finish', () => {
         /** Log the res */
-        logging.info(NAMESPACE, `[Response] METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`);
+        //logging.info(NAMESPACE, `[Response] METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`);
+        logger.info(`[${NAMESPACE}] [Response] METHOD: [${req.method}] - URL: [${req.url}] - STATUS: [${res.statusCode}] - IP: [${req.socket.remoteAddress}]`);
     });
 
     next();
 });
+
+/** Pino Logger */
 
 /** Parse the body of the request */
 app.use(express.urlencoded({ extended: true }));
@@ -58,6 +62,6 @@ app.use((req, res, next) => {
 
 const httpServer = http.createServer(app);
 
-httpServer.listen(config.server.port, () => logging.info(NAMESPACE, `Server is running ${config.server.hostname}:${config.server.port}`));
+httpServer.listen(config.server.port, () => logger.info(`[${NAMESPACE}] Server is running ${config.server.hostname}:${config.server.port}`));
 
 export { httpServer as server };
